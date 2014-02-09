@@ -53,7 +53,7 @@ public class GeoFrame extends JFrame {
         setResizable(false);
         setBounds(DEFAULT_POSITION_X, DEFAULT_POSITION_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setIconImage(Toolkit.getDefaultToolkit().createImage("C:\\Users\\Игорь\\Desktop\\Документы\\X7l5SlpT1Uc.jpg"));
-        setTitle("Геометрия 2.1. Задание 2");
+        setTitle("Геометрия 3.1. Задание 3");
 
         gPanel1 = new JPanel(new BorderLayout());
         jLabel1 = new JLabel();
@@ -216,11 +216,11 @@ public class GeoFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jarviz();
-                for(int i=1; i<bestPoints.size(); ++i){
+                for (int i = 1; i < bestPoints.size(); ++i) {
                     g.drawLine(bestPoints.get(i).getX(), bestPoints.get(i).getY(),
-                            bestPoints.get(i-1).getX(), bestPoints.get(i-1).getY());
+                            bestPoints.get(i - 1).getX(), bestPoints.get(i - 1).getY());
                 }
-                jLabel1.repaint();
+                jLabel1.update(jLabel1.getGraphics());
             }
         }
         );
@@ -338,7 +338,18 @@ public class GeoFrame extends JFrame {
                 g.setColor(Color.GREEN);
                 drawB();
                 copyArray.remove(lastIndex);
+                jLabel1.update(jLabel1.getGraphics());
             }
+        }
+        for (int i = 0; i < copyArray.size(); ++i) {
+            g.setColor(Color.RED);
+            if (!bestPoints.contains(copyArray.get(i))) {
+                g.fillOval(copyArray.get(i).getX() - 5, copyArray.get(i).getY() - 5, 10, 10);
+            }
+        }
+        for (int i = 0; i < bestPoints.size(); ++i) {
+            g.setColor(Color.BLUE);
+            g.fillOval(bestPoints.get(i).getX() - 5, bestPoints.get(i).getY() - 5, 10, 10);
         }
         g.setColor(Color.GREEN);
         g.drawLine(bestPoints.get(bestPoints.size() - 1).getX(), bestPoints.get(bestPoints.size() - 1).getY(),
@@ -349,16 +360,16 @@ public class GeoFrame extends JFrame {
     }
 
     public static synchronized void drawB() {
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         g.drawLine(bestPoints.get(bestPoints.size() - 1).getX(), bestPoints.get(bestPoints.size() - 1).getY(),
                 bestPoints.get(bestPoints.size() - 2).getX(), bestPoints.get(bestPoints.size() - 2).getY());
     }
 
     public static synchronized void drawP(final int i) {
-        try {
-            Thread.sleep(5);
             g.fillOval(copyArray.get(i).getX() - 5, copyArray.get(i).getY() - 5, 10, 10);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
     }
 }
