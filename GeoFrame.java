@@ -215,7 +215,12 @@ public class GeoFrame extends JFrame {
         jButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                graham();
+                jarviz();
+                for(int i=1; i<bestPoints.size(); ++i){
+                    g.drawLine(bestPoints.get(i).getX(), bestPoints.get(i).getY(),
+                            bestPoints.get(i-1).getX(), bestPoints.get(i-1).getY());
+                }
+                jLabel1.repaint();
             }
         }
         );
@@ -293,7 +298,7 @@ public class GeoFrame extends JFrame {
         });
     }
 
-    public static void graham() {
+    public static void jarviz() {
         jButton1.setEnabled(false);
         jButton2.setEnabled(false);
 
@@ -316,6 +321,8 @@ public class GeoFrame extends JFrame {
             int lastIndex = 0;
             for (int i = 0; i < copyArray.size(); i++) {
                 if (myCompare(bestPoints.get(bestPoints.size() - 1), copyArray.get(lastIndex), copyArray.get(i)) == -1) {
+                    g.setColor(Color.BLACK);
+                    drawP(lastIndex);
                     lastIndex = i;
                     g.setColor(Color.BLUE);
                 } else {
@@ -342,11 +349,8 @@ public class GeoFrame extends JFrame {
     }
 
     public static synchronized void drawB() {
-
-        //Thread.sleep(10);
         g.drawLine(bestPoints.get(bestPoints.size() - 1).getX(), bestPoints.get(bestPoints.size() - 1).getY(),
                 bestPoints.get(bestPoints.size() - 2).getX(), bestPoints.get(bestPoints.size() - 2).getY());
-
     }
 
     public static synchronized void drawP(final int i) {
